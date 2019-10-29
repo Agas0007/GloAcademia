@@ -43,11 +43,6 @@ let appData = {
 
         let addExpenses = prompt('Перечислите возможные расходы через запятую.','машина квартира ипотека');
             appData.addExpenses = addExpenses.split(/(?:,| )+/);   // сплит ставит запятую учитывая пробелы
-                for( let i=0; i < appData.addExpenses.length; i++ ){  // цикл приводит к заглавным буквам. 
-                    appData.addExpenses[i] = appData.addExpenses[i][0].toUpperCase() +
-                    appData.addExpenses[i].slice(1).toLowerCase(); 
-                }
-        
             appData.deposit = confirm('Есть ли у Вас депозит в банке?');
         let expence,
             expenceValue;
@@ -124,7 +119,12 @@ for(let key in appData ){
     console.log('Наша программа включает в себя данные: ' + key + ' - ' + appData[key]);
 }
 
-console.log(appData.addExpenses.join(', '));
+    /* Перебираю массив и делаю элементы заглавными буквами */
+    
+let arr = appData.addExpenses.map(function(item){
+    return item[0].toUpperCase() + item.slice(1).toLowerCase();
+    });
+console.log(arr.join(', '));
 
 
 /*
