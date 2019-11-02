@@ -48,30 +48,16 @@ let appData = {
     expensesMonth: 0,
     start: function(){
 
+        
         /* Запретил нажатие кнопки Рассчитать пока поле Месячный доход пустое */ 
-
+        
         if(salaryMonth.value === '' ){
             start.addEventListener('click', function(event){
-                event.preventDefault()
+                event.preventDefault();
             });
-            alert('Ошибка, поле Месячный доход должно быть заполненно')
             return false;
-            
         }
-
-        /* функция блокирующая input и убирает кнопку Рассчитать */
-
-        function blockerInput(){  
-            start.addEventListener('click', function(){
-                inputLeft.forEach(function(items){
-                    items.disabled = true;
-                });
-                start.style.display = 'none';
-                cancel.style.display = 'block';
-            }); 
-         }
-         blockerInput();
-        
+         
         appData.budget = +salaryMonth.value;
 
         appData.getExpenses();
@@ -86,7 +72,13 @@ let appData = {
 
         appData.showResult();
         
-        
+    /* функция блокирующая input и убирает кнопку Рассчитать */
+        inputLeft = document.querySelectorAll('.data input[type="text"]');
+        inputLeft.forEach(function(items){
+            items.disabled = true;
+        });
+        start.style.display = 'none';
+        cancel.style.display = 'block';
     },
     showResult: function(){     // Метод Выводит результаты вычисления в правую колонку
         blockBudgetMonth.value = appData.budgetMonth;
