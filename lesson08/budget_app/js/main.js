@@ -1,7 +1,9 @@
 'use strict';
 
     /* Получение кнопки */
-let start  = document.getElementById('start');
+let start  = document.getElementById('start'),
+    cancel = document.getElementById('cancel');
+
     /* Получить кнопки “+” (плюс) через Tag, каждую в своей переменной. */
 let bottonPlusIncome = document.querySelectorAll('button')[0], // ('button')[0] ноль означает индекс элемента к кторому обращаемся по тегу
     bottonPlusExepenses = document.querySelectorAll('button')[1]; // кнопка "+" считает Доход 
@@ -27,8 +29,8 @@ let salaryMonth = document.querySelector('.salary-amount'), //Месячный �
     inputPossibleExpense = document.querySelector('.additional_expenses-item'),  // Возможные расходы
     inputTarget = document.querySelector('.target-amount'),
     inputeReng = document.querySelector('.period-select'), // ползунок
-    periodAmount = document.querySelector('.period-amount');
-
+    periodAmount = document.querySelector('.period-amount'),
+    inputLeft = document.querySelectorAll('.data input[type="text"]'); // input слевой стороны 
     //incomeItem = document.querySelectorAll('.income-items');
 
 let appData = {
@@ -75,6 +77,10 @@ let appData = {
         blockAdditionalIncome.value = appData.addIncome.join(', ');
         blockTargetMonth.value =  Math.ceil(appData.getTargetMonth());
         blockIncomePeriod.value = appData.calcSavedMoney();
+        
+        inputeReng.addEventListener('input', function(){  // меняет значение  по движению ползунка в поле НАКОПЛЕНИЯ ЗА ПЕРИОД  
+            blockIncomePeriod.value = appData.calcSavedMoney();
+        });
     }, 
     addExpensesBlock: function(){  // // кнопка плюс которая добавляет инпуты и после 3-го
         
@@ -103,7 +109,7 @@ let appData = {
         
     },
     addIncomeBlock: function(){  // // кнопка плюс которая добавляет инпуты и после 3-го
-        
+    
         let cloneIncomeItem = incomeItems[0].cloneNode(true);
         incomeItems[0].parentNode.insertBefore(cloneIncomeItem, bottonPlusIncome);
         incomeItems = document.querySelectorAll('.income-items');
@@ -165,7 +171,7 @@ let appData = {
     },*/
     getExpensesMonth: function(){
         for(let key in appData.expenses){
-            appData.expensesMonth += appData.expenses[key];  
+            appData.expensesMonth += +appData.expenses[key];  
         }
     },
     
@@ -202,9 +208,23 @@ let appData = {
     },
     calcSavedMoney: function(){
         return appData.budgetMonth * inputeReng.value; // inputeReng(поле).value(полученное значение с input )
-    }
+    },
+    
 };
 
+ let blockerInput = function  (){   // функция блокирующая input и кнопку Рассчитать
+    start.addEventListener('click', function(){
+        inputLeft.forEach(function(items){
+            items.disabled = true;
+        });
+        start.style.display = 'none';
+        cancel.style.display = 'block';
+    }); 
+};
+
+blockerInput();
+
+appData.getRange();
 start.addEventListener('click', appData.start);
 
 bottonPlusExepenses.addEventListener('click', appData.addExpensesBlock); // создал клик и вызов при клике метода 
