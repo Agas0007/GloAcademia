@@ -47,12 +47,31 @@ let appData = {
     moneyDeposite: 0,
     expensesMonth: 0,
     start: function(){
-        
+
+        /* Запретил нажатие кнопки Рассчитать пока поле Месячный доход пустое */ 
+
         if(salaryMonth.value === '' ){
+            start.addEventListener('click', function(event){
+                event.preventDefault()
+            });
             alert('Ошибка, поле Месячный доход должно быть заполненно')
-            return;
+            return false;
+            
         }
 
+        /* функция блокирующая input и убирает кнопку Рассчитать */
+
+        function blockerInput(){  
+            start.addEventListener('click', function(){
+                inputLeft.forEach(function(items){
+                    items.disabled = true;
+                });
+                start.style.display = 'none';
+                cancel.style.display = 'block';
+            }); 
+         }
+         blockerInput();
+        
         appData.budget = +salaryMonth.value;
 
         appData.getExpenses();
@@ -128,20 +147,6 @@ let appData = {
                 appData.income[itemFinanse] = cashFinanse;
             }
         });
-        /*if(confirm('Есть ли у Вас дополнительный источник зароботака')){
-            let itemIncome,
-                cashIncome;
-                
-                do{
-                    itemIncome = prompt('Какой у вас есть дополнительный зароботок?', 'Таксую');  
-                }while(itemIncome > 0 || itemIncome < 0 || itemIncome === '' || itemIncome === null);  
-             
-                do{
-                    cashIncome = prompt('Сколько вы в месяц зарабатываете?', 15000);  
-                }while(isNaN(cashIncome) || cashIncome === '' || cashIncome === null);  
-                appData.income[itemIncome] = cashIncome; 
-        }
-        */
         for ( let key in appData.income){
             appData.incomeMonth += +appData.income[key]; 
         }
@@ -212,18 +217,6 @@ let appData = {
     
 };
 
- let blockerInput = function  (){   // функция блокирующая input и кнопку Рассчитать
-    start.addEventListener('click', function(){
-        inputLeft.forEach(function(items){
-            items.disabled = true;
-        });
-        start.style.display = 'none';
-        cancel.style.display = 'block';
-    }); 
-};
-
-blockerInput();
-
 appData.getRange();
 start.addEventListener('click', appData.start);
 
@@ -239,15 +232,16 @@ if(appData.getTargetMonth() > 0){
     console.log('Wtkm не будет достигнута');
 }
 
-/*for(let key in appData ){
+/*
+for(let key in appData ){
     console.log('Наша программа включает в себя данные: ' + key + ' - ' + appData[key]);
 }
 */
     /* Перебираю массив и делаю элементы заглавными буквами */
- /*   
+ 
+/*   
 let arr = appData.addExpenses.map(function(item){
     return item[0].toUpperCase() + item.slice(1).toLowerCase();
     });
 console.log(arr.join(', '));
-
 */
