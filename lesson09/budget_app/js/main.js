@@ -87,7 +87,7 @@ let appData = {
         blockIncomePeriod.value = this.calcSavedMoney();
         
         inputeReng.addEventListener('input', function(){  // меняет значение  по движению ползунка в поле НАКОПЛЕНИЯ ЗА ПЕРИОД  
-            blockIncomePeriod.value = this.calcSavedMoney();
+            blockIncomePeriod.value = appData.calcSavedMoney();
         });
     }, 
     addExpensesBlock: function(){  // // кнопка плюс которая добавляет инпуты и после 3-го
