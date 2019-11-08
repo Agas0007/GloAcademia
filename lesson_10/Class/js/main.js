@@ -13,7 +13,7 @@ DomElement.prototype.createElement =  function(name, height, width, bg, fontSize
     let elem;
     this.selector = name;    
     if(this.selector[0] === '.'){
-            elem = document.createElement('div')
+            elem = document.createElement('div');
             elem.className = name.slice(1);
         }
         else if(this.selector[0] === '#'){

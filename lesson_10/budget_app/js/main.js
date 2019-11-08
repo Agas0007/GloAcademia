@@ -225,46 +225,41 @@ AppData.prototype.showResult = function(){     // Метод Выводит ре
     };
 
 
-    const appData = new AppData();
-    AppData.prototype.eventsListeners = function(){   // Сюда перенести все навешивания событий
-  
 
+
+
+
+
+
+
+
+
+AppData.prototype.eventsListeners = function(){
+   // Сюда перенести все навешивания событий
    start.addEventListener('click', appData.start.bind(appData));  // привязал контекст вызова функции start к AppData
 
-
-
-    cancel.addEventListener('click', function(){                /* функция разблокирующая input и возвращает кнопку Рассчитать */                  
-       let inputReset = document.querySelectorAll('input[type="text"]');
-       inputReset.forEach(function(items){
-            items.value = '';
-            items.disabled = false;
-        });
-        appData.reset();
-        cancel.style.display = 'none';
-        start.style.display = 'block';
-    });
-
-    bottonPlusExepenses.addEventListener('click', appData.addExpensesBlock); // создал клик и вызов при клике метода 
-    bottonPlusIncome.addEventListener('click', appData.addIncomeBlock);
-
+   /* функция разблокирующая input и возвращает кнопку Рассчитать */
+   
+       cancel.addEventListener('click', function(){
+          let inputReset = document.querySelectorAll('input[type="text"]');
+          inputReset.forEach(function(items){
+               items.value = '';
+               items.disabled = false;
+           });
+           appData.reset();
+           cancel.style.display = 'none';
+           start.style.display = 'block';
+       });
+   
+   bottonPlusExepenses.addEventListener('click', appData.addExpensesBlock); // создал клик и вызов при клике метода 
+   bottonPlusIncome.addEventListener('click', appData.addIncomeBlock);
 };    
 
-
-
-//eventListener(); // -- вызов функции "методов вызова" раскоментируй
+const appData = new AppData();
+appData.eventsListeners();                  //-- вызов функции "методов вызова" раскоментируй
 
 console.log(appData);
 
 
 
 
-/*
-console.log('Расходы за месяц: ' + this.expensesMonth);
-console.log('Уровень дохода: ' + appData.getStatusIncome());
-
-if(appData.getTargetMonth() > 0){
-    console.log('Цель будет достигнута за: ' + Math.ceil(appData.getTargetMonth()) + ' мес.');
-}else{
-    console.log('Wtkm не будет достигнута');
-}
-*/
