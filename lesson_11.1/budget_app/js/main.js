@@ -1,43 +1,41 @@
 'use strict';
 
     /* Получение кнопки */
-let start  = document.getElementById('start'),
-    cancel = document.getElementById('cancel');
-
+const start  = document.getElementById('start'),
+    cancel = document.getElementById('cancel'),
     /* Получить кнопки “+” (плюс) через Tag, каждую в своей переменной. */
-let bottonPlusIncome = document.querySelectorAll('button')[0], // ('button')[0] ноль означает индекс элемента к кторому обращаемся по тегу
-    bottonPlusExepenses = document.querySelectorAll('button')[1]; // кнопка "+" считает Доход 
+    bottonPlusIncome = document.querySelectorAll('button')[0], // ('button')[0] ноль означает индекс элемента к кторому обращаемся по тегу
+    bottonPlusExepenses = document.querySelectorAll('button')[1], // кнопка "+" считает Доход 
     /* Доступ к Чекбоксу*/
-let checkBox = document.querySelector('#deposit-check');
+    checkBox = document.querySelector('#deposit-check'),
     /* поля для ввода возможных доходов */
-let inputAdditional = document.querySelectorAll('.additional_income-item'),   // Возможный доход
-    inputAdditional2 = document.querySelectorAll('.additional_income-item')[1];  // Возможный доход
+    inputAdditional = document.querySelectorAll('.additional_income-item'),   // Возможный доход
+    inputAdditional2 = document.querySelectorAll('.additional_income-item')[1],  // Возможный доход
     /* Итоговые блоки */
-let blockBudgetMonth = document.querySelector('.budget_month-value'),
+    blockBudgetMonth = document.querySelector('.budget_month-value'),
     blockBudgetDay = document.querySelector('.budget_day-value'),
     blockExpensesMonth = document.querySelector('.expenses_month-value'),
     blockAdditionalIncome = document.querySelector('.additional_income-value'),
     blockAdditionalExpenses = document.querySelector('.additional_expenses-value'),
     blockIncomePeriod = document.querySelector('.income_period-value'),    
-    blockTargetMonth = document.querySelector('.target_month-value');
     /* Другие инпуты */
-let salaryMonth = document.querySelector('.salary-amount'), //Месячный доход 
+    salaryMonth = document.querySelector('.salary-amount'), //Месячный доход 
     extraIncome = document.querySelectorAll('.income-title')[1], // Дополнительный доход
-    incomeItems = document.querySelectorAll('.income-items'), // Блок дополнительный доход
     inputExpense = document.querySelectorAll('.expenses-title')[1],  // Обязательные расходы
-    expensesItems = document.querySelectorAll('.expenses-items'),  //Обязательные расходы сумма ЗАМЕНИЛ 
     inputPossibleExpense = document.querySelector('.additional_expenses-item'),  // Возможные расходы
     inputTarget = document.querySelector('.target-amount'),
     inputeReng = document.querySelector('.period-select'), // ползунок
     periodAmount = document.querySelector('.period-amount'),
-    inputLeft = document.querySelectorAll('.data input[type="text"]'), // input слевой стороны 
-    
     depositCheck = document.querySelector('#deposit-check'),
     depositAmount = document.querySelector('.deposit-amount'),
-    depositPercent = document.querySelector('.deposit-percent'),
     depositBank = document.querySelector('.deposit-bank');
     
 
+    let blockTargetMonth = document.querySelector('.target_month-value'),
+        expensesItems = document.querySelectorAll('.expenses-items'),  //Обязательные расходы сумма 
+        incomeItems = document.querySelectorAll('.income-items'),// Блок дополнительный доход
+        depositPercent = document.querySelector('.deposit-percent'), 
+        inputLeft = document.querySelectorAll('.data input[type="text"]'); // input слевой стороны
 
 
 const AppData = function (){
@@ -69,8 +67,9 @@ AppData.prototype.start = function(){
    this.budget = +salaryMonth.value;
 
     this.addBlock();
-    this.getExpensesMonth();
     this.getExpInc();
+    this.getExpenses();
+    this.getExpensesMonth();
     this.getInfoDeposit();
     this.getBudget();
     
@@ -124,6 +123,7 @@ AppData.prototype.showResult = function(){     // Метод Выводит ре
             }
     };
    
+   
     AppData.prototype.getExpenses = function(){
         const _this = this;
         expensesItems.forEach(function(item){
@@ -163,8 +163,6 @@ AppData.prototype.showResult = function(){     // Метод Выводит ре
         let addExpenses = inputPossibleExpense.value.split(',');
         addExpenses.forEach(function(item){
             item = item.trim();
-            console.log(item);
-            
             if (item !== ''){
                 _this.addExpenses.push(item);
             }
@@ -272,7 +270,7 @@ depositCheck.addEventListener('change', function(){
                 if(selectIndex === 'other'){
                     depositPercent.style.display = 'inline-block';
                     depositPercent.value = '';
-                    //depositPercent.disabled = false;
+                    depositPercent.disabled = false;
                 }else{
                     depositPercent.style.display = 'none';
                     depositPercent.value = selectIndex;
