@@ -89,13 +89,13 @@ AppData.prototype.start = function(){
 
 AppData.prototype.showResult = function(){     // Метод Выводит результаты вычисления в правую колонку
         const _this = this;
-        blockBudgetMonth.value = this.budgetMonth;
+        blockBudgetMonth.value = Math.round(this.budgetMonth);
         blockBudgetDay.value = this.budgetDay;
         blockExpensesMonth.value = this.expensesMonth;
         blockAdditionalExpenses.value = this.addExpenses.join(', ');
         blockAdditionalIncome.value = this.addIncome.join(', ');
         blockTargetMonth.value =  Math.ceil(this.getTargetMonth());
-        blockIncomePeriod.value = this.calcSavedMoney();
+        blockIncomePeriod.value = Math.round(this.calcSavedMoney());
         
         inputeReng.addEventListener('input', function(){  // меняет значение  по движению ползунка в поле НАКОПЛЕНИЯ ЗА ПЕРИОД  
             blockIncomePeriod.value = _this.calcSavedMoney();
@@ -205,14 +205,9 @@ AppData.prototype.showResult = function(){     // Метод Выводит ре
     AppData.prototype.getInfoDeposit = function(){
         const _this = this;
         if(_this.deposit){
-            do{
-                this.percentDeposite = depositPercent.value;
-            }while(isNaN(this.percentDeposite) || this.percentDeposite === '' || this.percentDeposite === null);
             
-            do{
-                this.moneyDeposite = depositAmount.value;
-            }while(isNaN(this.moneyDeposite) || this.moneyDeposite === '' || this.moneyDeposite === null);
-            
+            this.percentDeposite = depositPercent.value;
+            this.moneyDeposite = depositAmount.value;
         }
     };
     AppData.prototype.calcSavedMoney = function(){
