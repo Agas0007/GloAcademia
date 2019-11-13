@@ -179,7 +179,7 @@ AppData.prototype.getExpensesMonth = function(){
 };
 
 AppData.prototype.getBudget = function(){
-    this.budgetMonth = 1 * this.budget + 1 * this.incomeMonth - 1 * this.expensesMonth + (this.moneyDeposite * this.percentDeposite)/12;
+    this.budgetMonth = 1 * this.budget + 1 * this.incomeMonth - 1 * this.expensesMonth + (1 * this.moneyDeposite * 1 * this.percentDeposite)/12;
     this.budgetDay = Math.floor(this.budgetMonth / 30);
     
 };
